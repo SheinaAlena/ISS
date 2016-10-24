@@ -15,7 +15,7 @@ border: 0;
 }
 
 
-#header{
+div.header{
     text-align: center;
     height: 20%;
     background-color: #225588;
@@ -58,16 +58,15 @@ ul.css-menu-3 li a.selected {
 }
 
 
-div.cart {
+#cart {
   float:right;
   margin-left: 3px;
   height: 75vh;
   width: 70vw;
   background-size: cover;
 }
-div.cart iframe{
-      background-size: cover;
-      
+#cart iframe{
+      background-size: cover;      
       height: 75vh;
       width: 70vw;
 }
@@ -78,9 +77,7 @@ div.left {
   text-align: center;
   font-size: 14px;
 }
-div.left accordionPanel p:selectManyCheckbox{
-    height: 10px;
-}
+
 .clear {
   clear: both;
 }

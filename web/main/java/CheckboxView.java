@@ -1,5 +1,3 @@
-package connectToDB;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,12 +19,15 @@ public class CheckboxView {
     private List<String> modesOfTransport;
     private String[] selectedRoute;
     private List<String> route;
+    private String[] selectedOffense;
+    private List<String> offense;
     
      @PostConstruct
     public void init() {
         cities = new ArrayList<String>();
         modesOfTransport = new ArrayList<String>();
         route = new ArrayList<String>();
+        offense=new ArrayList<String>();
         
         Connection connection = null;
         String url = "jdbc:postgresql://localhost:5432/RSS";
@@ -40,24 +41,18 @@ public class CheckboxView {
             Statement statement = null;
             statement = connection.createStatement();
             
-            ResultSet result1 = statement.executeQuery(
-                    "SELECT city FROM city");
-            while (result1.next()) {
-              cities.add(result1.getString("city"));
-              
-            }
-            ResultSet result2 = statement.executeQuery(
-                    "SELECT modes FROM modes_of_transport");
-            while (result2.next()) {
-              modesOfTransport.add(result2.getString("modes"));
-              
-            }
+            query(statement,cities,"city","city");
+            query(statement,modesOfTransport,"modes","modes_of_transport");
+            //query(statement,route,"\"nameRoute"\","route"); 
             ResultSet result3 = statement.executeQuery(
-                    "SELECT nameRoute FROM route");
+                    "SELECT \"nameRoute\" FROM route");
             while (result3.next()) {
-              route.add(result3.getString("nameRoute"));
-              
+              route.add(result3.getString("nameRoute"));              
             }
+            query(statement,offense,"type","offense");
+            
+           
+            
         } catch (Exception ex) {
             //выводим наиболее значимые сообщения
             Logger.getLogger(CheckboxView.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,7 +67,15 @@ public class CheckboxView {
         }
  
     }
-  
+
+    public void query(Statement statement,List<String> list, String param, String dbColumn) throws SQLException {
+        ResultSet result = statement.executeQuery(
+                "SELECT "+param+" FROM "+dbColumn);
+        while (result.next()) {
+            list.add(result.getString(param));
+        }
+    }
+                
     public String[] getSelectedCities() {
         return selectedCities;
     }
@@ -107,6 +110,18 @@ public class CheckboxView {
  
     public List<String> getRoute() {
         return route;
+    } 
+    
+    public String[] getSelectedOffense() {
+        return selectedOffense;
+    }
+ 
+    public void setSelectedOffense(String[] selectedOffense) {
+        this.selectedOffense = selectedOffense;
+    }
+ 
+    public List<String> getOffense() {
+        return offense;
     } 
     
 }
