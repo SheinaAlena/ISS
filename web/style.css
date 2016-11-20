@@ -7,7 +7,9 @@ and open the template in the editor.
     Created on : 01.09.2016, 18:55:12
     Author     : Алена
 */
+
 @charset "utf-8";
+@type "text/css";
 * {
 margin: 0;
 padding: 0;
@@ -15,7 +17,7 @@ border: 0;
 }
 
 
-div.header{
+.header{
     text-align: center;
     height: 20%;
     background-color: #225588;
@@ -77,6 +79,15 @@ div.left {
   text-align: center;
   font-size: 14px;
 }
+
+#list {
+  float:right;
+  margin-left: 3px;
+  height: 75vh;
+  width: 70vw;
+  background-size: cover;
+}
+
 
 .clear {
   clear: both;

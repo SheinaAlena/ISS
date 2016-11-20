@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+            <link rel="stylesheet" type="text/css" href="style.css"></link>
+        </h:head>
+
+        <h:body>
+
+            <div class="block">
+                <!--Заголовок-->
+                <div class="header" align="center">Система информационного обеспечения органов государственной власти </div>
+                <!--Меню навигации-->
+                <ul class="css-menu-3">
+                    <li><a href="index.xhtml" class="selected">Текущая обстановка</a></li>
+                    <li><a href="directory.xhtml">Справочники</a></li>
+                    <li><a href="reports.xhtml">Отчеты</a></li>
+                    <li><a href="offense.xhtml">Нарушения</a></li>
+                    <li><a href="#">Еще раздел</a></li>
+                </ul>
+                <div class="content">
+                    <!--Карта-->
+                    <h:form>   
+                        <div id="cart" >
+                            <iframe src="#{checkboxView.cart}"></iframe>
+                        </div>
+                    </h:form>
+                    <!--Параметры-->
+                    <div class="left">  
+
+                        <p:accordionPanel>
+                            <p:tab title="Виды перевозок">
+                                <p:selectManyCheckbox id="grid1" value="#{checkboxView.selectedModesOfTransport}" layout="grid" columns="2" style="text-align: left">
+                                    <p:ajax event="click" rendered="cart" listener="#{checkboxView.cart()}"/>
+                                    <f:selectItems value="#{checkboxView.modesOfTransport}"/>
+                                  
+                                </p:selectManyCheckbox>
+                            </p:tab>
+
+                            <p:tab title="Районы и города">
+                                <p:selectManyCheckbox id="grid2" value="#{checkboxView.selectedCities}" layout="grid" columns="2" style="text-align: left">
+                                    <f:selectItems value="#{checkboxView.cities}"/>
+                                </p:selectManyCheckbox>
+                            </p:tab>
+
+                            <p:tab title="Маршруты">
+                                <p:selectManyCheckbox id="grid3" value="#{checkboxView.selectedRoute}" layout="grid" columns="4" style="text-align: left">
+                                    <f:selectItems value="#{checkboxView.route}"/>
+                                </p:selectManyCheckbox>
+                            </p:tab>
+
+                            <p:tab title="Нарушения">
+                                <p:selectManyCheckbox id="grid4" value="#{checkboxView.selectedOffense}" layout="grid" columns="1" style="text-align: left">
+                                    <f:selectItems value="#{checkboxView.offense}"/>
+                                </p:selectManyCheckbox>
+                            </p:tab>
+                        </p:accordionPanel>
+                        
+
+
+                        <p:commandButton id="clean" value="Очистить" >
+
+                        </p:commandButton>
+
+
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <!--Подвал - Footer-->
+                <div class="footer">
+                    <p>Главная | <a href="#">О нас</a> | <a href="#">Техническая поддержка</a></p>
+                </div>
+            </div>
+
+        </h:body>
+    </f:view>
+</html>
