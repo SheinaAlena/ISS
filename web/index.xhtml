@@ -39,7 +39,7 @@
                                 <p:selectManyCheckbox id="grid1" value="#{checkboxView.selectedModesOfTransport}" layout="grid" columns="2" style="text-align: left">
                                     <p:ajax event="click" rendered="cart" listener="#{checkboxView.cart()}"/>
                                     <f:selectItems value="#{checkboxView.modesOfTransport}"/>
-                                  
+
                                 </p:selectManyCheckbox>
                             </p:tab>
 
@@ -55,13 +55,17 @@
                                 </p:selectManyCheckbox>
                             </p:tab>
 
-                            <p:tab title="Нарушения">
-                                <p:selectManyCheckbox id="grid4" value="#{checkboxView.selectedOffense}" layout="grid" columns="1" style="text-align: left">
-                                    <f:selectItems value="#{checkboxView.offense}"/>
-                                </p:selectManyCheckbox>
+                            <p:tab title="Период">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <p:outputLabel for="datetime1" value="от" />
+                                    <p:calendar id="datetime1" value="#{calendarView.date1}" pattern="MM/dd/yyyy HH:mm:ss" />
+
+                                    <p:outputLabel for="datetime2" value="до" />
+                                    <p:calendar id="datetime2" value="#{calendarView.date2}" pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:panelGrid>
                             </p:tab>
                         </p:accordionPanel>
-                        
+
 
 
                         <p:commandButton id="clean" value="Очистить" >

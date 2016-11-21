@@ -1,21 +1,17 @@
 package connectToDB;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
+
 
 public class CheckboxView {
 
     private String[] selectedCities;
-    private List<String> cities;
+    private ConnectToDB cities;
     private String[] selectedModesOfTransport;
     private List<String> modesOfTransport;
     private String[] selectedRoute;
@@ -26,20 +22,14 @@ public class CheckboxView {
     private List<String> tableCity;
     
     public void init() throws Exception {
-        cities = new ArrayList<String>();
+        cities = new ConnectToDB();
         modesOfTransport = new ArrayList<String>();
         route = new ArrayList<String>();
         offense = new ArrayList<String>();
-        this.cart = "http://www.openstreetmap.org/export/embed.html?bbox=54.12689208984376%2C53.075877572693564%2C57.19207763671876%2C54.06583577161281&amp;layer=mapnik";
-        cities=ConnectToDB.getData("*", "city");
+        cart = "http://www.openstreetmap.org/export/embed.html?bbox=54.12689208984376%2C53.075877572693564%2C57.19207763671876%2C54.06583577161281&amp;layer=mapnik";
+        cities.getData("*", "city");
         
 
-    }
-
-    public String cart() {
-
-        this.cart = "http://www.openstreetmap.org/#map=9/54.0279/53.4677";
-        return cart;
     }
 
     public void query(Statement statement, List<String> list, String param, String dbColumn) throws SQLException {
@@ -58,7 +48,7 @@ public class CheckboxView {
         this.selectedCities = selectedCities;
     }
 
-    public List<String> getCities() {
+    public ConnectToDB getCities() {
         return cities;
     }
 

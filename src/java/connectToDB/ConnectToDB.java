@@ -35,7 +35,7 @@ public class ConnectToDB {
             System.out.println("Драйвер подключен");
             connection = jdbc.getConnection();
             System.out.println("Соединение установлено");
-            ps = connection.prepareStatement("SELECT "+param1+" FROM "+ param2);
+            ps = connection.prepareStatement("SELECT "+ param1 +" FROM "+ param2);
             ResultSet result = ps.executeQuery();
             ResultSetMetaData md = result.getMetaData();
             int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
