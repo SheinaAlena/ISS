@@ -6,12 +6,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 
-
+@ManagedBean
 public class CheckboxView {
 
     private String[] selectedCities;
-    private ConnectToDB cities;
+    private ConnectToDB dbRequest;
     private String[] selectedModesOfTransport;
     private List<String> modesOfTransport;
     private String[] selectedRoute;
@@ -19,25 +23,27 @@ public class CheckboxView {
     private String[] selectedOffense;
     private List<String> offense;
     private String cart;
-    private List<String> tableCity;
-    
-    public void init() throws Exception {
-        cities = new ConnectToDB();
+    //
+    private List<String> cities;
+
+    @PostConstruct
+    public void init() {
+        dbRequest = new ConnectToDB();
         modesOfTransport = new ArrayList<String>();
+        cities = new ArrayList<String>();
         route = new ArrayList<String>();
         offense = new ArrayList<String>();
-        cart = "http://www.openstreetmap.org/export/embed.html?bbox=54.12689208984376%2C53.075877572693564%2C57.19207763671876%2C54.06583577161281&amp;layer=mapnik";
-        cities.getData("*", "city");
         
-
-    }
-
-    public void query(Statement statement, List<String> list, String param, String dbColumn) throws SQLException {
-        ResultSet result = statement.executeQuery(
-                "SELECT " + param + " FROM " + dbColumn);
-        while (result.next()) {
-            list.add(result.getString(param));
+        try {
+           cities=dbRequest.getData("name", "city");
+           modesOfTransport=dbRequest.getData("name", "modes_of_transport");
+           route=dbRequest.getData("route.\"nameRoute\"", "route");
+           
+           
+        } catch (Exception ex) {
+            Logger.getLogger(CheckboxView.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public String[] getSelectedCities() {
@@ -48,7 +54,7 @@ public class CheckboxView {
         this.selectedCities = selectedCities;
     }
 
-    public ConnectToDB getCities() {
+    public List<String> getCities() {
         return cities;
     }
 

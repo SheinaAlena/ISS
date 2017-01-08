@@ -27,25 +27,34 @@ public class ConnectToDB {
 
     public static List<String> getData(String param1, String param2) throws Exception {
         List<String> data = new ArrayList<String>();
+        List<String> name = new ArrayList<String>();
         Connection connection = null;
-        PreparedStatement ps = null;
+        Statement ps = null;
 
         try {
             Class.forName("org.postgresql.Driver");
             System.out.println("Драйвер подключен");
             connection = jdbc.getConnection();
             System.out.println("Соединение установлено");
-            ps = connection.prepareStatement("SELECT "+ param1 +" FROM "+ param2);
-            ResultSet result = ps.executeQuery();
+            ps = connection.createStatement();
+            //Выполним запрос
+            ResultSet result = ps.executeQuery(
+                    "SELECT " + param1 + " FROM " + param2);
             ResultSetMetaData md = result.getMetaData();
             int cnt = md.getColumnCount(); // получаем кол-во колонок (1..cnt)
-            
-            while (result.next()) {               
+           
+            while (result.next()) {
                 for (int i = 1; i <= cnt; i++) {
-                    String name = md.getColumnName(i);  // получем имя колонки
-                    data.add(result.getString(i));     // получаем значение                 
+                    data.add(result.getString(i));    // получаем значение  
                 }
             }
+            
+            for (int i = 1; i <= cnt; i++) {
+                name.add(md.getColumnName(i));  // получем имя колонки
+                
+            }
+            System.out.println(name);
+
         } catch (Exception ex) {
             //выводим наиболее значимые сообщения
             Logger.getLogger(CheckboxView.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,7 +67,24 @@ public class ConnectToDB {
                 }
             }
         }
-
         return data;
+
     }
+
+    public static List<String> nameColumns(ResultSetMetaData md) {
+        List<String> nameColumns = new ArrayList<String>();
+        
+        try {
+            int cnt = md.getColumnCount();
+            for (int i = 1; i <= cnt; i++) {
+                nameColumns.add(md.getColumnName(i));
+            }  // получем имя колонки
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectToDB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return nameColumns;
+
+    }
+
 }

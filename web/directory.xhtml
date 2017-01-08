@@ -29,26 +29,28 @@
                 <!--Таблицы-->
 
                 <div id="list" >
+                    
                     <h:form>   
-                        <p:dataTable var="directory" value="#{dataDB.tableTransport}" editable="true" style="margin-bottom:20px">
+                        <h:outputText>Выберите справочник</h:outputText>
+                        <p:dataTable var="directory" value="#{dataDB.tableCity}"  editable="true" style="margin-bottom:20px">
 
                             <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update="@form" />
                             <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update="@form" />
 
                             <p:columns value="#{dataDB.columns}" var="column"
-                                       sortBy="#{column.property}" filterBy="#{column.property}">
+                                       sortBy="#{columns.property}" filterBy="#{columns.property}">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tableTransport}" />
+                                        <h:outputText value="#{dataDB.tableCity}" />
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{tableTransport}" style="width:100%" label="Name"/>
+                                        <p:inputText value="#{dataDB.tableCity}" style="width:100%" label="Name"/>
                                     </f:facet>
 
                                     <f:facet name="header">
-                                        #{column.header}
+                                        #{columns.header}
                                     </f:facet>
-                                    <h:outputText value="#{data[column.property]}"/>
+                                    <h:outputText value="#{data[columns.property]}"/>
                                 </p:cellEditor>
                             </p:columns>
                             <p:column style="width:32px">
@@ -65,18 +67,18 @@
                     <h:form>
                         <p:menu style="width: 28vw; text-align: center">
                             <p:submenu label="Транспортные средства"/>
-                            <p:menuitem value="Транспортные средства" update="list" action="#{dataDB.buttonAction('transport')}" ajax="false"/>
-                            <p:menuitem value="Типы ТС" rendered="list" actionListener="#{data.buttonAction}" ajax="true" />
-                            <p:menuitem value="Модели ТС" actionListener="#{data.buttonAction}" ajax="true" />
+                            <p:menuitem value="Транспортные средства" update="list" actionListener="#{dataDB.buttonAction}" ajax="false"/>
+                            <p:menuitem value="Типы ТС" rendered="list" actionListener="#{dataDB.buttonAction}" ajax="true" />
+                            <p:menuitem value="Модели ТС" actionListener="#{dataDB.buttonAction}" ajax="true" />
                             <p:submenu label="Виды перевозок"/>
-                            <p:menuitem value="Перевозки" actionListener="#{data.buttonAction}" ajax="true" />
+                            <p:menuitem value="Перевозки" actionListener="#{dataDB.buttonAction}" ajax="true" />
                             <p:submenu label="Нарушения"/>
-                            <p:menuitem value="Виды нарушений" actionListener="#{data.buttonAction}" ajax="true" />
+                            <p:menuitem value="Виды нарушений" actionListener="#{dataDB.buttonAction}" ajax="true" />
                             <p:submenu label="Маршруты"/>
-                            <p:menuitem value="Маршруты" actionListener="#{data.buttonAction}" ajax="true" />  
-                            <p:menuitem value="Остановочные пункты" actionListener="#{data.buttonAction}" ajax="true" />
+                            <p:menuitem value="Маршруты" actionListener="#{dataDB.buttonAction}" ajax="true" />  
+                            <p:menuitem value="Остановочные пункты" actionListener="#{dataDB.buttonAction}" ajax="true" />
                             <p:submenu label="Города и районы"/>
-                            <p:menuitem value="Города и районы" actionListener="#{data.buttonAction}" ajax="true" />
+                            <p:menuitem value="Города и районы" actionListener="#{dataDB.buttonAction}" ajax="true" />
 
 
                         </p:menu>

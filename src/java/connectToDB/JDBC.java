@@ -28,6 +28,7 @@ public class JDBC {
         try{
             InitialContext initContext = new InitialContext();
             dataSource=(DataSource) initContext.lookup(dataSourceName);
+            System.out.println("зашли в jdbc");
         } catch (NamingException e){
             log.log(Level.SEVERE, "JNDIException: {0}", e.getMessage());
         }

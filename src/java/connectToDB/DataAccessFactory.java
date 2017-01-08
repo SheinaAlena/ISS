@@ -23,7 +23,8 @@ public class DataAccessFactory {
     private JDBC prepareJDBCUtils() {
         if (jdbcUtil == null) {
             jdbcUtil = new JDBC();
-            jdbcUtil.init("jdbc/ISS");
+            jdbcUtil.init("jdbc/iss");
+            System.out.println("зашли в ресурс");
         }
  
         return jdbcUtil;
