@@ -21,79 +21,70 @@ import javax.faces.bean.ManagedBean;
  * @author Алена
  */
 @ManagedBean
-public class dataDB implements Serializable {
+public class dataDB extends ConnectToDB implements Serializable {
 
-    private List<String> directory;
     private List<String> tableCity;
-    private String nameTable;
-    private String columnName;
-    private List<ColumnModel> columns;
+    private List<String> columns;
+    private int cnt;
     private ConnectToDB dbTransport = new ConnectToDB();
 
     @PostConstruct
     public void init() {
-        
+
     }
-    
+
     public void buttonAction() {
-        directory = new ArrayList<String>();
         try {
-            tableCity = dbTransport.getData("*", "city");
-            
-            System.out.println(tableCity);
+            tableCity = ConnectToDB.getData("*", "city").data;
+            columns = ConnectToDB.getData("*", "city").name;
+            cnt = columns.size();
         } catch (Exception ex) {
             Logger.getLogger(dataDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //init();       
-        createDynamicColumns();
+
+    }
+
+    public List<String> getColumns() {
+        return columns;
+    }
+
+    public int getCnt() {
+        return cnt;
     }
 
     public List<String> getTableCity() {
         return tableCity;
     }
 
-    public String getNameTable() {
-        return nameTable;
+    private int n = 0;
+    private int n2 = 0;
 
+    public String NumberOfColumn() {
+        String nn = columns.get(n);
+        n++;
+        return nn;
     }
 
-    
-    private void createDynamicColumns() {
-        columns = new ArrayList<ColumnModel>();
-          
+    public String NumberOfRecords() {
+        String n1 = null;
+        try {
+            n1 = tableCity.get(n2);
+            n2++;        
 
-    }
-
-    static public class ColumnModel implements Serializable {
-
-        private String header;
-        private String property;
-
-        public ColumnModel(String header, String property) {
-            this.header = header;
-            this.property = property;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-
-        public String getHeader() {
-            return header;
-        }
-
-        public String getProperty() {
-            return property;
-        }
+        return n1;
 
     }
-
-    public List<ColumnModel> getColumns() {
-        return columns;
-    }
-
-    public String getColumnName() {
-        return columnName;
-    }
-
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
-    }
+//    public void onRowEdit(RowEditEvent event) {
+//        FacesMessage msg = new FacesMessage("Car Edited", ((Car) event.getObject()).getId());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
+//     
+//    public void onRowCancel(RowEditEvent event) {
+//        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Car) event.getObject()).getId());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
 
 }

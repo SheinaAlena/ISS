@@ -20,6 +20,7 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>webapp/index.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>AdminConstraint</display-name>

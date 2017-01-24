@@ -5,9 +5,8 @@
  */
 package connectToDB;
 
+import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -24,8 +23,9 @@ import java.util.logging.Logger;
 public class ConnectToDB {
 
     private static final JDBC jdbc = DataAccessFactory.getJDBCUtils();
+    
 
-    public static List<String> getData(String param1, String param2) throws Exception {
+    public static DataDB  getData(String param1, String param2) throws Exception {
         List<String> data = new ArrayList<String>();
         List<String> name = new ArrayList<String>();
         Connection connection = null;
@@ -53,7 +53,7 @@ public class ConnectToDB {
                 name.add(md.getColumnName(i));  // получем имя колонки
                 
             }
-            System.out.println(name);
+          
 
         } catch (Exception ex) {
             //выводим наиболее значимые сообщения
@@ -67,24 +67,29 @@ public class ConnectToDB {
                 }
             }
         }
-        return data;
-
+        DataDB arr=new DataDB(data,name); 
+        return arr;
     }
+    static public class DataDB {
 
-    public static List<String> nameColumns(ResultSetMetaData md) {
-        List<String> nameColumns = new ArrayList<String>();
-        
-        try {
-            int cnt = md.getColumnCount();
-            for (int i = 1; i <= cnt; i++) {
-                nameColumns.add(md.getColumnName(i));
-            }  // получем имя колонки
-        } catch (SQLException ex) {
-            Logger.getLogger(ConnectToDB.class.getName()).log(Level.SEVERE, null, ex);
+        public List<String> data;
+        public List<String> name;
+       
 
+        public DataDB(List<String> data, List<String> name) {
+            this.data=data;
+            this.name=name;
+        }       
+
+        public List<String> getData() {
+            return data;
         }
-        return nameColumns;
+
+        public List<String> getName() {
+            return name;
+        }
 
     }
 
 }
+

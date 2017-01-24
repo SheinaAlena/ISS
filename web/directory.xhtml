@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru"
       xmlns:h="http://xmlns.jcp.org/jsf/html"   
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
@@ -13,84 +14,67 @@
     </h:head>
 
     <h:body>
+        <!--Заголовок-->
+        <div class="header" align="center">Система информационного обеспечения органов государственной власти </div>
+        <!--Меню навигации-->
+        <ul class="css-menu-3">
+            <li><a href="index.xhtml" >Текущая обстановка</a></li>
+            <li><a href="directory.xhtml" class="selected">Справочники</a></li>
+            <li><a href="reports.xhtml">Отчеты</a></li>
+            <li><a href="#">Раздел</a></li>
+            <li><a href="#">Еще раздел</a></li>
+        </ul>
 
-        <div class="block">
-            <!--Заголовок-->
-            <div class="header" align="center">Система информационного обеспечения органов государственной власти </div>
-            <!--Меню навигации-->
-            <ul class="css-menu-3">
-                <li><a href="index.xhtml" >Текущая обстановка</a></li>
-                <li><a href="directory.xhtml" class="selected">Справочники</a></li>
-                <li><a href="reports.xhtml">Отчеты</a></li>
-                <li><a href="#">Раздел</a></li>
-                <li><a href="#">Еще раздел</a></li>
-            </ul>
-            <div class="content">
-                <!--Таблицы-->
-
-                <div id="list" >
-                    
-                    <h:form>   
-                        <h:outputText>Выберите справочник</h:outputText>
-                        <p:dataTable var="directory" value="#{dataDB.tableCity}"  editable="true" style="margin-bottom:20px">
-
-                            <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update="@form" />
-                            <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update="@form" />
-
-                            <p:columns value="#{dataDB.columns}" var="column"
-                                       sortBy="#{columns.property}" filterBy="#{columns.property}">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{dataDB.tableCity}" />
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{dataDB.tableCity}" style="width:100%" label="Name"/>
-                                    </f:facet>
-
-                                    <f:facet name="header">
-                                        #{columns.header}
-                                    </f:facet>
-                                    <h:outputText value="#{data[columns.property]}"/>
-                                </p:cellEditor>
-                            </p:columns>
-                            <p:column style="width:32px">
-                                <p:rowEditor />
-                            </p:column>
-
-                        </p:dataTable>
-
-                    </h:form>
-                </div>
-
-                <!--Справочники-->
-                <div class="left"> 
-                    <h:form>
-                        <p:menu style="width: 28vw; text-align: center">
-                            <p:submenu label="Транспортные средства"/>
-                            <p:menuitem value="Транспортные средства" update="list" actionListener="#{dataDB.buttonAction}" ajax="false"/>
-                            <p:menuitem value="Типы ТС" rendered="list" actionListener="#{dataDB.buttonAction}" ajax="true" />
-                            <p:menuitem value="Модели ТС" actionListener="#{dataDB.buttonAction}" ajax="true" />
-                            <p:submenu label="Виды перевозок"/>
-                            <p:menuitem value="Перевозки" actionListener="#{dataDB.buttonAction}" ajax="true" />
-                            <p:submenu label="Нарушения"/>
-                            <p:menuitem value="Виды нарушений" actionListener="#{dataDB.buttonAction}" ajax="true" />
-                            <p:submenu label="Маршруты"/>
-                            <p:menuitem value="Маршруты" actionListener="#{dataDB.buttonAction}" ajax="true" />  
-                            <p:menuitem value="Остановочные пункты" actionListener="#{dataDB.buttonAction}" ajax="true" />
-                            <p:submenu label="Города и районы"/>
-                            <p:menuitem value="Города и районы" actionListener="#{dataDB.buttonAction}" ajax="true" />
+        <!--Справочники-->
+        <div class="left"> 
+            <h:form>
+                <p:menu style="width: 280px; text-align: center">
+                    <p:submenu label="Транспортные средства"/>
+                    <p:menuitem value="Транспортные средства" update="list"  actionListener="#{dataDB.buttonAction()}" ajax="false"/>
+                    <p:menuitem value="Типы ТС" update="list" actionListener="#{dataDB.buttonAction()}" ajax="false" />
+                    <p:menuitem value="Модели ТС" actionListener="#{dataDB.buttonAction()}" update="list" ajax="false" />
+                    <p:submenu label="Виды перевозок"/>
+                    <p:menuitem value="Перевозки" actionListener="#{dataDB.buttonAction()}" update="list" ajax="false" />
+                    <p:submenu label="Нарушения"/> 
+                    <p:menuitem value="Виды нарушений" actionListener="#{dataDB.buttonAction()}" update="list" ajax="false" />
+                    <p:submenu label="Маршруты"/>
+                    <p:menuitem value="Маршруты" actionListener="#{dataDB.buttonAction()}" update="list" ajax="false" />  
+                    <p:menuitem value="Остановочные пункты" actionListener="#{dataDB.buttonAction()}" update="list" ajax="false"/>
+                    <p:submenu label="Города и районы"/>
+                    <p:menuitem value="Города и районы" actionListener="#{dataDB.buttonAction()}" update="list" ajax="false" />
 
 
-                        </p:menu>
-                    </h:form>
-                </div>
-            </div>
-
-            <div class="clear"></div>
-            <!--Подвал - Footer-->
-            <div class="footer">
-                <p>Главная | <a href="#">О нас</a> | <a href="#">Техническая поддержка</a></p>
-            </div>
+                </p:menu>
+            </h:form>
         </div>
+        <!--Таблицы-->
+
+        <div id="list" >
+            <f:view>
+                <h:form>   
+                    <p:dataTable var="directory" value="#{dataDB.tableCity}" style="margin-bottom:280px; font-size: 12px">
+                     <!--  <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs" />
+                        -->
+                       
+                        <c:forEach items="#{dataDB.columns}" var="obj">                            
+                            <p:column headerText="#{dataDB.NumberOfColumn()}" >  
+                                <c:set 
+                                <h:outputText value="#{dataDB.NumberOfRecords()}" />
+                            </p:column>
+                        </c:forEach>
+                           
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+        </div>        
+
+
+        <div class="clear"></div>
+        <!--Подвал - Footer-->
+        <div class="footer">
+            <p>Главная | <a href="#">О нас</a> | <a href="#">Техническая поддержка</a></p>
+        </div>
+
     </h:body>
 </html>
